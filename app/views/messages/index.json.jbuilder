@@ -3,5 +3,6 @@ json.array! @new_messages do |message|
   json.user_name     message.user.name
   json.image         message.image
   json.text          message.content
-  json.datetime      message.created_at.to_s(:datetime)
+  json.date          message.created_at.to_s(:datetime)
 end
+
