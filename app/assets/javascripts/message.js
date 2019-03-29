@@ -61,6 +61,28 @@ $('.js-form').on('submit', function(e){
     alert('error');
   });
   return false;
-
 });
+  var interval = setInterval(function(){
+    var current_url = window.location.href;
+    var new_message = $('.message').last().attr('message-id');
+
+    if(current_url.match(/\/groups\/\d+\/messages/)){
+
+      $.ajax({
+        url: current_url,
+        type: "GET",
+        data: {id: new_message},
+        dataType: 'json',
+      })
+
+      .done(function(otherMessages){
+        var insertHTML = ""
+        otherMessages.forEach(function(message){
+          insertHTML = buildHTML(message);
+          $('.messages').append(insertHTML);
+          $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight},'fast');
+        })
+      })
+    }
+  },5000);
 });
